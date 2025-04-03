@@ -8,13 +8,13 @@ The default setting assumes the LLC cache is partitioned to 2MB pieces, each pie
 cd pin-3.31/source/tools/SimpleExamples 
 make obj-intel64/pinatrace.so
 cd ../../../..
-./pin-3.31/pin -t source/tools/SimpleExamples/obj-intel64/pinatrace.so -- ${YOUR EXECUTABLE}
+./pin-3.31/pin -t pin-3.31/source/tools/SimpleExamples/obj-intel64/pinatrace.so -- ${YOUR EXECUTABLE}
 ```
 
 2. Attach the pin tool to a running process:
 
 ```
-./pin-3.31/pin -pid {PID} -t source/tools/SimpleExamples/obj-intel64/pinatrace.so
+./pin-3.31/pin -pid {PID} -t pin-3.31/source/tools/SimpleExamples/obj-intel64/pinatrace.so
 ```
 
 The traces will be generated as a set of compressed files `pinatrace.out.{X}`, where X is the core number.
