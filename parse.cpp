@@ -95,7 +95,9 @@ int main(int argc, char **argv)
         char byte_arr[sizeof(TraceSample)];
         TraceSample *sample = (TraceSample *)byte_arr;
 
-        while (!fin.eof())
+        long num_lines = 0;
+
+        while (!fin.eof() && num_lines <= 6710886)   // At most 6710886 lines per thread trace, which ensures at most 2GB for all 16 thread traces
         {
             fin.read(byte_arr, sizeof(TraceSample));
             if (access_addr.insert(sample->addr).second)
@@ -109,6 +111,7 @@ int main(int argc, char **argv)
 
             if (strcmp(argv[2], "0") == 0)
                 outputFile << (sample->r == (uint8_t)'R'? "LD" : "ST") << " " << sample->addr << std::endl;
+                num_lines++;
             // outputFile.write()
             // char buffer [100];
             // snprintf ( buffer, 100, "The half of %d is %d", 60, 60/2 );
@@ -116,6 +119,9 @@ int main(int argc, char **argv)
             //     sample->ns, sample->addr, sample->r, sample->size);
             // }
         }
+
+        if (strcmp(argv[2], "0") == 0)
+            outputFile.close();
     }
     printf("clfoot_print: %20ld \n", cl_foot_print);
     printf("page_foot_print: %20ld \n", page_foot_print);
