@@ -65,15 +65,15 @@ int main(int argc, char **argv)
                 }
             }
         }
-        std::priority_queue<TraceSample*, std::vector<TraceSample*>, decltype(customLess)> overall_accesses(data.begin(), data.end(), customLess);
-        ofstream outputFile;
-        outputFile.open("overall.trace");
-        for (; !overall_accesses.empty(); overall_accesses.pop())
-        {
-            TraceSample* sample1 = overall_accesses.top();
-            //outputFile << sample1->ns << " " << sample1->addr << " " << sample1->r << " " << int(sample1->size) << std::endl;
-            outputFile.write((char *)sample1, sizeof(TraceSample));
-        }
+        // std::priority_queue<TraceSample*, std::vector<TraceSample*>, decltype(customLess)> overall_accesses(data.begin(), data.end(), customLess);
+        // ofstream outputFile;
+        // outputFile.open("overall.trace");
+        // for (; !overall_accesses.empty(); overall_accesses.pop())
+        // {
+        //     TraceSample* sample1 = overall_accesses.top();
+        //     //outputFile << sample1->ns << " " << sample1->addr << " " << sample1->r << " " << int(sample1->size) << std::endl;
+        //     outputFile.write((char *)sample1, sizeof(TraceSample));
+        // }
 
         for (size_t i = 0; i < data.size(); i++)
         {
@@ -108,7 +108,7 @@ int main(int argc, char **argv)
             }
 
             if (strcmp(argv[2], "0") == 0)
-                outputFile << sample->ns << " " << sample->addr << " " << sample->r << " " << int(sample->size) << std::endl;
+                outputFile << (sample->r == (uint8_t)'R'? "LD" : "ST") << " " << sample->addr << std::endl;
             // outputFile.write()
             // char buffer [100];
             // snprintf ( buffer, 100, "The half of %d is %d", 60, 60/2 );
